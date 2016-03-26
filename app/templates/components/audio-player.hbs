@@ -10,13 +10,30 @@
             {{action "clear" preventDefault=true}}>Clear</button>
     {{/if}}
   {{/if}}
+  <div>
+    <small>
+      * For Shoutcast URLs add "/;" after the port if your browser is not
+      able to play the stream
+    </small>
+  </div>
 </form>
 
+{{#if error}}
+  <p>An error occured</p>
+{{/if}}
+
 {{#if audio}}
-  <p>Volume: {{audio.volume}}</p>
   {{#if isPlaying}}
-    <button class="pure-button" {{action "stop"}}>Stop</button>
+    <p>
+      <button class="pure-button button-error" {{action "stop"}}>Stop</button>
+      {{#if isBuffering}}
+        Buffering...
+      {{else}}
+        Playing radio .  . .
+      {{/if}}
+      Volume: {{audio.volume}}
+    </p>
   {{else}}
-    <button class="pure-button" {{action "play"}}>Play</button>
+    <p><button class="pure-button" {{action "play"}}>Play</button> Stopped</p>
   {{/if}}
 {{/if}}

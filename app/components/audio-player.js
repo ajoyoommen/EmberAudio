@@ -18,6 +18,10 @@ export default Ember.Component.extend({
         this.audio.onplaying = function() {
             console.log("Now playing...");
         };
+
+        this.audio.onerror = function(e) {
+            console.log("An error occurred " + e.target.error.code);
+        };
     },
     start_playing() {
         Ember.set(this, 'isPlaying', true);
@@ -42,8 +46,10 @@ export default Ember.Component.extend({
     actions: {
         initRadio() {
             this.create();
+            this.play();
         },
         clear() {
+            this.stop();
             Ember.set(this, 'radio_url', '');
             Ember.set(this, 'audio', null);
         },
