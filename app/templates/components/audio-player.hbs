@@ -1,1 +1,22 @@
-{{yield}}
+<form class="text-center pure-form pure-form-aligned">
+  {{input value=radio_url placeholder="Copy radio URL..." autofocus="autofocus"}}
+
+  {{#if radio_url}}
+    <button class="pure-button"
+            {{action "initRadio" preventDefault=true}}>Create radio!</button>
+
+    {{#if audio}}
+      <button class="pure-button"
+            {{action "clear" preventDefault=true}}>Clear</button>
+    {{/if}}
+  {{/if}}
+</form>
+
+{{#if audio}}
+  <p>Volume: {{audio.volume}}</p>
+  {{#if isPlaying}}
+    <button class="pure-button" {{action "stop"}}>Stop</button>
+  {{else}}
+    <button class="pure-button" {{action "play"}}>Play</button>
+  {{/if}}
+{{/if}}
