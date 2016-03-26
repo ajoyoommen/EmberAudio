@@ -1,0 +1,39 @@
+<form class="text-center pure-form pure-form-aligned">
+  {{input value=radio_url placeholder="Copy radio URL..." autofocus="autofocus"}}
+
+  {{#if radio_url}}
+    <button class="pure-button"
+            {{action "initRadio" preventDefault=true}}>Create radio!</button>
+
+    {{#if audio}}
+      <button class="pure-button"
+            {{action "clear" preventDefault=true}}>Clear</button>
+    {{/if}}
+  {{/if}}
+  <div>
+    <small>
+      * For Shoutcast URLs add "/;" after the port if your browser is not
+      able to play the stream
+    </small>
+  </div>
+</form>
+
+{{#if error}}
+  <p>An error occured</p>
+{{/if}}
+
+{{#if audio}}
+  {{#if isPlaying}}
+    <p>
+      <button class="pure-button button-error" {{action "stop"}}>Stop</button>
+      {{#if isBuffering}}
+        Buffering...
+      {{else}}
+        Playing radio .  . .
+      {{/if}}
+      Volume: {{audio.volume}}
+    </p>
+  {{else}}
+    <p><button class="pure-button" {{action "play"}}>Play</button> Stopped</p>
+  {{/if}}
+{{/if}}
