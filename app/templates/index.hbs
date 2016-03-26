@@ -3,10 +3,16 @@
     <h2 class="text-center">Ember radio</h2>
 
     <form class="text-center pure-form pure-form-aligned">
-      {{input value=radio_url placeholder="Copy radio URL..."}}
-      <button class="pure-button">Create</button>
+      {{input value=model.radio_url placeholder="Copy radio URL..."}}
+      <button class="pure-button">Create radio!</button>
     </form>
 
-    <button class="pure-button">Play</button>
+    {{#if model._audio }}
+      {{#if model.isPlaying}}
+        <button class="pure-button">Stop</button>
+      {{else}}
+        <button class="pure-button">Play</button>
+      {{/if}}
+    {{/if}}
   </div>
 </div>
