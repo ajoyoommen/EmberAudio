@@ -15,13 +15,24 @@ export default Ember.Component.extend({
             this.audio.load();
             this.stop_playing();
         }
+
+        var component = this;
+
+        this.audio.onwaiting = function() {
+            component.set_buffering(true);
+        };
+
         this.audio.onplaying = function() {
-            console.log("Now playing...");
+            component.set_buffering(false);
         };
 
         this.audio.onerror = function(e) {
+            component.send('clear');
             console.log("An error occurred " + e.target.error.code);
         };
+    },
+    set_buffering(value) {
+        Ember.set(this, 'isBuffering', value);
     },
     start_playing() {
         Ember.set(this, 'isPlaying', true);
@@ -34,7 +45,6 @@ export default Ember.Component.extend({
             this.audio.load();
             this.audio.play();
             this.start_playing();
-            console.log("Started playing..");
         }
     },
     stop() {

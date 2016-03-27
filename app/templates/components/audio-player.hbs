@@ -18,11 +18,8 @@
   </div>
 </form>
 
-{{#if error}}
-  <p>An error occured</p>
-{{/if}}
-
 {{#if audio}}
+  <hr>
   {{#if isPlaying}}
     <p>
       <button class="pure-button button-error" {{action "stop"}}>Stop</button>
