@@ -18,6 +18,12 @@
   </div>
 </form>
 
+{{#if error}}
+  <p>Unable to play "{{radio_url}}"
+    <button {{action "clear"}} class="pure-button">Ok</button>
+  </p>
+{{/if}}
+
 {{#if audio}}
   <hr>
   {{#if isPlaying}}

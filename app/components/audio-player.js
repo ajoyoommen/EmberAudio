@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+    error: false,
     isPlaying: false,
     isBuffering: false,
     audio: null,
@@ -27,7 +28,7 @@ export default Ember.Component.extend({
         };
 
         this.audio.onerror = function(e) {
-            component.send('clear');
+            Ember.set(component, 'error', true);
             console.log("An error occurred " + e.target.error.code);
         };
     },
@@ -62,6 +63,7 @@ export default Ember.Component.extend({
             this.stop();
             Ember.set(this, 'radio_url', '');
             Ember.set(this, 'audio', null);
+            Ember.set(this, 'error', false);
         },
         play() {
             this.play();
