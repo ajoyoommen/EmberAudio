@@ -13,12 +13,6 @@
                 {{action "clear" preventDefault=true}}>Clear</button>
         {{/if}}
       {{/if}}
-      <p>Copy any radio URL or audio URL and EmberAudio will attempt to play the
-        audio.
-        <small>* For Shoutcast URLs add "/;" after the port if your browser is
-          not able to play the stream
-        </small>
-      </p>
     </form>
   </div>
 </div>
@@ -26,14 +20,30 @@
 <div class="pure-u-1-3">
   <div>
     {{#if error}}
-      <p>Unable to play "{{radio_url}}"
-        <button {{action "clear"}}><i class="fa fa-times-circle"></i></button>
+      <p>Unable to play <small>{{radio_url}}</small>
+        <a class="controls" {{action "clear"}}>
+          <i class="fa fa-times-circle"></i></a>
       </p>
     {{/if}}
 
     {{#if audio}}
+      <p class="controls text-center">
       {{#if isPlaying}}
-        <p><i class="controls fa fa-stop fa-4x" {{action "stop"}}></i></p>
+        <i class="fa fa-stop-circle-o fa-3x" {{action "stop"}}></i>
+      {{else}}
+        <i class="fa fa-play-circle-o fa-3x" {{action "play"}}></i>
+      {{/if}}
+      </p>
+
+      <p>{{currentTime}} <span class="float-right">{{totalTime}}</span></p>
+    {{/if}}
+  </div>
+</div>
+
+<div class="pure-u-1-3">
+  <div>
+    {{#if audio}}
+      {{#if isPlaying}}
         <p>
           {{#if isBuffering}}
             Buffering...
@@ -42,18 +52,15 @@
           {{/if}}
         </p>
       {{else}}
-        <p><i class="controls fa fa-play fa-4x" {{action "play"}}></i></p>
         <p>Stopped</p>
       {{/if}}
     {{/if}}
   </div>
 </div>
 
-<div class="pure-u-1-3">
-  <div>
-    {{#if audio}}
-      <p>Duration: {{totalTime}}</p>
-      <p>Time: {{currentTime}} s</p>
-    {{/if}}
-  </div>
+<div class="pure-u-1">
+  <p>Copy any radio URL or audio URL and EmberAudio will attempt to play the
+    audio. <small>* For Shoutcast URLs add "/;" after the port if your browser
+    is not able to play the stream</small>
+  </p>
 </div>
