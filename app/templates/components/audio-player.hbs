@@ -1,36 +1,66 @@
-<form class="text-center pure-form pure-form-aligned">
-  {{input value=radio_url placeholder="Copy radio URL..." autofocus="autofocus"}}
+<div class="pure-u-1-3">
+  <div>
+    <form class="text-center pure-form pure-form-aligned">
+      {{input value=radio_url placeholder="Copy radio URL..."
+        autofocus="autofocus"}}
+      <br>
+      {{#if radio_url}}
+        <button class="pure-button"
+                {{action "initRadio" preventDefault=true}}>Create radio!</button>
 
-  {{#if radio_url}}
-    <button class="pure-button"
-            {{action "initRadio" preventDefault=true}}>Create radio!</button>
+        {{#if audio}}
+          <button class="pure-button"
+                {{action "clear" preventDefault=true}}>Clear</button>
+        {{/if}}
+      {{/if}}
+    </form>
+  </div>
+</div>
+
+<div class="pure-u-1-3">
+  <div>
+    {{#if error}}
+      <p>Unable to play <small>{{radio_url}}</small>
+        <a class="controls" {{action "clear"}}>
+          <i class="fa fa-times-circle"></i></a>
+      </p>
+    {{/if}}
 
     {{#if audio}}
-      <button class="pure-button"
-            {{action "clear" preventDefault=true}}>Clear</button>
-    {{/if}}
-  {{/if}}
-  <div>
-    <small>
-      * For Shoutcast URLs add "/;" after the port if your browser is not
-      able to play the stream
-    </small>
-  </div>
-</form>
-
-{{#if audio}}
-  <hr>
-  {{#if isPlaying}}
-    <p>
-      <button class="pure-button button-error" {{action "stop"}}>Stop</button>
-      {{#if isBuffering}}
-        Buffering...
+      <p class="controls text-center">
+      {{#if isPlaying}}
+        <i class="fa fa-stop-circle-o fa-3x" {{action "stop"}}></i>
       {{else}}
-        Playing radio .  . .
+        <i class="fa fa-play-circle-o fa-3x" {{action "play"}}></i>
       {{/if}}
-      Volume: {{audio.volume}}
-    </p>
-  {{else}}
-    <p><button class="pure-button" {{action "play"}}>Play</button> Stopped</p>
-  {{/if}}
-{{/if}}
+      </p>
+
+      <p>{{currentTime}} <span class="float-right">{{totalTime}}</span></p>
+    {{/if}}
+  </div>
+</div>
+
+<div class="pure-u-1-3">
+  <div>
+    {{#if audio}}
+      {{#if isPlaying}}
+        <p>
+          {{#if isBuffering}}
+            Buffering...
+          {{else}}
+            Playing radio .  . .
+          {{/if}}
+        </p>
+      {{else}}
+        <p>Stopped</p>
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
+
+<div class="pure-u-1">
+  <p>Copy any radio URL or audio URL and EmberAudio will attempt to play the
+    audio. <small>* For Shoutcast URLs add "/;" after the port if your browser
+    is not able to play the stream</small>
+  </p>
+</div>
