@@ -2,6 +2,22 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     error: false,
+
+    duration: 0,
+    totalTime: Ember.computed('duration', function() {
+        var d = this.get('duration');
+        if (isNaN(d) || !isFinite(d)) {
+            d = 0;
+        }
+        return Math.floor(d / 60) + ':' + Math.floor(d % 60);
+    }),
+
+    position: 0,
+    currentTime: Ember.computed('position', function() {
+        var d = this.get('position');
+        return Math.floor(d / 60) + ':' + Math.floor(d % 60);
+    }),
+
     isPlaying: false,
     isBuffering: false,
     audio: null,
@@ -19,18 +35,51 @@ export default Ember.Component.extend({
 
         var component = this;
 
-        this.audio.onwaiting = function() {
+        this.audio.addEventListener('waiting', function() {
             component.set_buffering(true);
-        };
+        });
 
-        this.audio.onplaying = function() {
+        this.audio.addEventListener('playing', function() {
             component.set_buffering(false);
-        };
+        });
 
-        this.audio.onerror = function(e) {
+        this.audio.addEventListener('error', function() {
             Ember.set(component, 'error', true);
             console.log("An error occurred " + e.target.error.code);
-        };
+        });
+
+        this.audio.addEventListener('timeupdate', function() {
+            Ember.set(component, "position", component.audio.currentTime);
+            Ember.set(component, "duration", component.audio.duration);
+        });
+
+        this.audio.addEventListener('stalled', function() {
+            console.log("Stalled... ");
+        });
+
+        this.audio.addEventListener('suspend', function() {
+            console.log("Suspended... ");
+        });
+
+        this.audio.addEventListener('abort', function() {
+            console.log("ABORTED...");
+        });
+
+        this.audio.addEventListener('emptied', function() {
+            console.log("Emptied...");
+        });
+
+        this.audio.addEventListener('ended', function() {
+            console.log("Ended...");
+        });
+
+        this.audio.addEventListener('loadstart', function() {
+            console.log("Started loading...");
+        });
+
+        this.audio.addEventListener('pause', function() {
+            console.log("Media PAUSED...");
+        });
     },
     set_buffering(value) {
         Ember.set(this, 'isBuffering', value);
