@@ -1,12 +1,12 @@
-<div class="pure-u-1-3">
+<div class="pure-u-1 pure-u-md-1-3">
   <div>
-    <form class="text-center pure-form pure-form-aligned">
+    <form class="pure-form pure-form-aligned">
       {{input value=radio_url placeholder="Copy radio URL..."
         autofocus="autofocus"}}
-      <br>
       {{#if radio_url}}
         <button class="pure-button"
-                {{action "initRadio" preventDefault=true}}>Create radio!</button>
+                {{action "initRadio" preventDefault=true}}>
+          Play <i class="fa fa-angle-right"></i></button>
 
         {{#if audio}}
           <button class="pure-button"
@@ -17,7 +17,7 @@
   </div>
 </div>
 
-<div class="pure-u-1-3">
+<div class="pure-u-1 pure-u-md-1-3">
   <div>
     {{#if error}}
       <p>Unable to play <small>{{radio_url}}</small>
@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<div class="pure-u-1-3">
+<div class="pure-u-1 pure-u-md-1-3">
   <div>
     {{#if audio}}
       {{#if isPlaying}}
