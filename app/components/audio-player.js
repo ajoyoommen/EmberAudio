@@ -43,7 +43,7 @@ export default Ember.Component.extend({
             component.set_buffering(false);
         });
 
-        this.audio.addEventListener('error', function() {
+        this.audio.addEventListener('error', function(e) {
             Ember.set(component, 'error', true);
             console.log("An error occurred " + e.target.error.code);
         });
